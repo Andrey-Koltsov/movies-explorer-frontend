@@ -1,0 +1,23 @@
+.header {
+  padding: 18px 0;
+}
+
+.header__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__menu {
+  display: flex;
+  gap: 30px;
+}
+
+.header__link {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #fff;
+}
