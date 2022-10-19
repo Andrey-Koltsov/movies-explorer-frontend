@@ -1,6 +1,6 @@
-import "./Search.css";
+import "./SearchForm.css";
 
-export default function Search() {
+export default function SearchForm() {
   return(
     <div className="search">
       <div className="search__finder"></div>

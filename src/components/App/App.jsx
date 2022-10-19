@@ -1,15 +1,15 @@
-import Films from '../Films/Films';
+import Movies from '../Movies/Movies';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
-// import LandingPage from '../LandingPage/LandingPage';
+import Main from '../Main/Main';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <Header />
-      {/* <LandingPage /> */}
-      <Films />
+      {/* <Main /> */}
+      <Movies />
       <Footer />
     </div>
   );
