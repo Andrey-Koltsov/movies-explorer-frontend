@@ -1,4 +1,4 @@
-import Container from "../../Container/Container";
+import Container from "../Container/Container";
 import SectionTitle from "../SectionTitle/SectionTitle";
 import Scale from "./Scale/Scale";
 import "./AboutProject.css";

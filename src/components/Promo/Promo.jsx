@@ -1,5 +1,5 @@
-import Container from "../../Container/Container";
-import promoImage from "../../../images/promo.svg";
+import Container from "../Container/Container";
+import promoImage from "../../images/promo.svg";
 import "./Promo.css";
 
 export default function Promo(params) {

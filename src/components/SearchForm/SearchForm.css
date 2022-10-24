@@ -4,3 +4,71 @@
   background: #2F2F2F;
   border-radius: 9px;
 }
+
+.search__form {
+  padding-right: 30px;
+  display: flex;
+  flex-grow: 1;
+  border-right: 1px solid #424242;
+}
+
+.search__icon {
+  margin-right: 10px;
+  width: 34px;
+  height: 34px;
+  background-image: url('../../images/search-icon.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: .4;
+}
+
+.search__input {
+  margin-right: 16px;
+  flex-grow: 1;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+  border: none;
+  background-color: transparent;
+  color: #8B8B8B;
+}
+
+.search__input:focus {
+  outline: 1px solid #8B8B8B;
+  border-radius: 4px;
+}
+
+.search__filter {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding-left: 30px;
+}
+
+.search__filter-label {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  color: #FFFFFF;
+}
+
+
+.search__btn {
+  width: 80px;
+  height: 34px;
+  background: #4285F4;
+  border: none;
+  border-radius: 48px;
+  color: #FFFFFF;
+  background-image: url('../../images/search-icon.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  transition: .1s opacity linear;
+}
+
+.search__btn:hover {
+  opacity: .7;
+}

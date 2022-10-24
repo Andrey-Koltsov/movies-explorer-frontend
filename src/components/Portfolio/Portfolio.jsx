@@ -1,4 +1,4 @@
-import Container from "../../Container/Container";
+import Container from "../Container/Container";
 import "./Portfolio.css";
 
 export default function Portfolio() {
