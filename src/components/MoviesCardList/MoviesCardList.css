@@ -1,5 +1,5 @@
 .movies-card-list__list {
-  margin: 80px 0 0;
+  margin: 0;
   padding: 0;
   display: grid;
   list-style: none;
@@ -20,4 +20,16 @@
   background-color: #2F2F2F;
   color: #fff;
   cursor: pointer;
+  transition: .1s opacity linear;
+}
+
+.movies-card-list__another:hover {
+  opacity: .8;
+}
+
+@media screen and (max-width: 768px) {
+  .movies-card-list__list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px 30px;
+  }
 }

@@ -2,6 +2,7 @@
 .portfolio {
   padding: 50px 0 125px;
 }
+
 .portfolio__title {
   font-style: normal;
   font-weight: 400;
@@ -43,4 +44,22 @@
   font-size: 30px;
   line-height: 60px;
   color: #FFFFFF;
+}
+
+@media screen and (max-width: 768px) {
+  .portfolio {
+    padding: 45px 0 90px;
+  }
+
+  .portfolio__title {
+    color: #A0A0A0;
+  }
+
+  .portfolio__project-name {
+    font-size: 28px;
+  }
+
+  .portfolio__project-link {
+    font-size: 28px;
+  }
 }

@@ -3,7 +3,7 @@
   height: 20px;
   border-radius: 20px;
   border: none;
-  background: #bfbfbf;
+  background: #EBEBEB;
   position: relative;
   transition: .1s all linear;
   cursor: pointer;
@@ -13,17 +13,17 @@
   height: 16px;
   width: 16px;
   border-radius: 8px;
-  background: #fff;
+  background-color: #fff;
   top: 50%;
   transform: translateY(-50%);
   left: 2px;
   position: absolute;
-  transition: .5s all linear;
+  transition: .1s all linear;
 }
 .filter-checkbox_on {
   background: #3DDC84;
 }
 .filter-checkbox_on.filter-checkbox::after {
-  left: auto;
-  right: 2px;
+  background-color: #F5F5F5;
+  left: 18px;
 }

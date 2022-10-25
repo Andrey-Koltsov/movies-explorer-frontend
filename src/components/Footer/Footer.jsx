@@ -2,7 +2,7 @@ import Container from "../Container/Container";
 import "./Footer.css";
 
 export default function Footer() {
-  return(
+  return (
     <footer className="footer">
       <Container>
         <div className="footer__content">
@@ -10,12 +10,22 @@ export default function Footer() {
           <div className="footer__columns">
             <div className="footer__copyright">© 2022</div>
             <div className="footer__sites">
-              <div className="footer__limk">Яндекс.Практикум</div>
-              <div className="footer__limk">Github</div>
+              <a
+                className="footer__link"
+                href="https://practicum.yandex.ru"
+                target="_blank"
+                rel="noreferrer noopener"
+              >Яндекс.Практикум</a>
+              <a
+                className="footer__link"
+                href="https://github.com/Yandex-Practicum"
+                target="_blank"
+                rel="noreferrer noopener"
+              >Github</a>
             </div>
           </div>
         </div>
       </Container>
-    </footer>
+    </footer >
   );
 };

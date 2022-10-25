@@ -1,7 +1,7 @@
 import Container from "../Container/Container";
 import SectionTitle from "../SectionTitle/SectionTitle";
-import "./AboutMe.css";
 import photoImage from "../../images/photo.jpg";
+import "./AboutMe.css";
 
 export default function AboutMe() {
   return (

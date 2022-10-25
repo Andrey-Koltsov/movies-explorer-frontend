@@ -32,6 +32,17 @@
   margin-top: 110px;
 }
 
-.about-project__scale {
-  margin-top: 110px;
+@media screen and (max-width: 768px) {
+  .about-project {
+    padding: 90px 0;
+  }
+
+  .about-project__column-text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .about-project__scale {
+    margin-top: 93px;
+  }
 }

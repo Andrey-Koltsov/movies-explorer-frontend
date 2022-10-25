@@ -27,6 +27,7 @@
 }
 
 .about-me__about {
+  max-width: 600px;
   margin-top: 26px;
   font-style: normal;
   font-weight: 400;
@@ -49,4 +50,36 @@
   height: 327px;
   object-fit: cover;
   border-radius: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .about-me__name {
+    font-size: 40px;
+    line-height: 40px;
+  }
+
+  .about-me__proffesion {
+    margin-top: 16px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .about-me__about {
+    max-width: 364px;
+    margin-top: 20px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .about-me__social {
+    margin-top: 87px;
+  }
+
+  .about-me__image {
+    width: 255px;
+    height: 307px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
 }
