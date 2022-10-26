@@ -17,6 +17,7 @@
 .scale__lable_color_green {
   background-color: #3DDC84;
   color: #fff;
+  min-width: 100px;
 }
 
 .scale_descr {
@@ -33,5 +34,21 @@
   .scale_descr {
     font-weight: 400;
     color: #A0A0A0;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .scale__lable {
+    padding: 9px 0;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: center;
+  }
+
+  .scale_descr {
+    margin-top: 10px;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
   }
 }

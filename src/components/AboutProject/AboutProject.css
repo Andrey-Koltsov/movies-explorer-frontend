@@ -46,3 +46,41 @@
     margin-top: 93px;
   }
 }
+
+@media screen and (max-width: 425px) {
+  .about-project__two-columns {
+    flex-direction: column;
+    gap: 56px
+  }
+
+  .about-project__column-text {
+    margin: 20px 0 0;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .about-project {
+    padding: 70px 8px;
+  }
+
+  .about-project__two-columns {
+    margin-top: 60px;
+    flex-direction: column;
+    gap: 56px
+  }
+
+  .about-project__scale {
+    margin-top: 60px;
+  }
+
+  .about-project__column-title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .about-project__column-text {
+    margin: 16px 0 0;
+    font-size: 11px;
+    line-height: 16px;
+  }
+}

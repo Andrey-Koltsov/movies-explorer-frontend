@@ -9,15 +9,30 @@ export default function Portfolio() {
         <ul className="portfolio__projects">
           <li className="portfolio__item">
             <div className="portfolio__project-name">Статичный сайт</div>
-            <div className="portfolio__project-link">↗</div>
+            <a
+                className="portfolio__project-link"
+                href="https://github.com/Andrey-Koltsov/how-to-learn"
+                target="_blank"
+                rel="noreferrer noopener"
+              >↗</a>
           </li>
           <li className="portfolio__item">
             <div className="portfolio__project-name">Адаптивный сайт</div>
-            <div className="portfolio__project-link">↗</div>
+            <a
+                className="portfolio__project-link"
+                href="https://github.com/Andrey-Koltsov/russian-travel"
+                target="_blank"
+                rel="noreferrer noopener"
+              >↗</a>
           </li>
           <li className="portfolio__item">
             <div className="portfolio__project-name">Одностраничное приложение</div>
-            <div className="portfolio__project-link">↗</div>
+            <a
+                className="portfolio__project-link"
+                href="https://github.com/Andrey-Koltsov/react-mesto-api-full"
+                target="_blank"
+                rel="noreferrer noopener"
+              >↗</a>
           </li>
         </ul>
       </Container >

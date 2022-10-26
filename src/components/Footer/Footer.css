@@ -47,8 +47,29 @@
   opacity: .7;
 }
 
-@media screen and (max-width: 768px) {
-  .container {
-    padding: 0 30px;
+@media screen and (max-width: 320px) {
+  .footer__content {
+    padding: 79px 0 10px;
+  }
+
+  .footer__text {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .footer__columns {
+    margin-top: 30px;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .footer__sites {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .footer__copyright {
+    margin-top: 30px;
   }
 }

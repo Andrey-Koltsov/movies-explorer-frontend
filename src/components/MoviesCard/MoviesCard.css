@@ -63,3 +63,9 @@
     height: 190px;
   }
 }
+
+@media screen and (max-width: 425px) {
+  .movies-card__image {
+    height: 168px;
+  }
+}

@@ -1,17 +1,47 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../../images/logo.svg";
+import Logotype from "../Logotype/Logotype";
 import "./Login.css";
 
 export default function Login() {
+  const [inputsValue, setInputsValue] = useState({ email: '', password: '' });
+  const [inputsValidity, setInputsValidity] = useState({ email: false, password: false });
+  const [inputsErrorMessage, setInputsErrorMessage] = useState({ email: '', password: '' });
+
+  function handleChange({ target: { name, value, validity, validationMessage } }) {
+    setInputsValue(prevStat => ({ ...prevStat, [name]: value }));
+    setInputsValidity(prevStat => ({ ...prevStat, [name]: validity.valid }));
+    setInputsErrorMessage(prevStat => ({ ...prevStat, [name]: validationMessage }));
+  }
+
   return (
     <div className="login">
-      <img src={logo} alt="Логотип" className="login__logo" />
+      <Logotype />
       <h1 className="login__title">Рады видеть!</h1>
       <form className="login__form">
-        <label htmlFor="" className="login__label">E-mail</label>
-        <input type="text" className="login__input" />
-        <label htmlFor="" className="login__label">Пароль</label>
-        <input type="password" className="login__input" />
+        <fieldset className="login__fieldset">
+          <label htmlFor="" className="register__label">E-mail</label>
+          <input
+            required
+            type="email"
+            className={`register__input ${inputsValidity.email ? "" : "register__input_error"}`}
+            name="email"
+            onChange={handleChange}
+            value={inputsValue.email}
+          />
+          <span className="register__error">{inputsErrorMessage.email}</span>
+
+          <label htmlFor="" className="register__label">Пароль</label>
+          <input
+            required
+            type="password"
+            className={`register__input ${inputsValidity.password ? "" : "register__input_error"}`}
+            name="password"
+            onChange={handleChange}
+            value={inputsValue.password}
+          />
+          <span className="register__error">{inputsErrorMessage.password}</span>
+        </fieldset>
         <button className="login__submit" type>Войти</button>
       </form>
       <div className="login__inner">

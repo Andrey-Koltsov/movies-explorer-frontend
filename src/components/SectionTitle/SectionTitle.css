@@ -8,3 +8,13 @@
   color: #FFFFFF;
   border-bottom: 1px solid #DADADA;
 }
+
+
+@media screen and (max-width: 320px) {
+  .section-title {
+    margin: 0;
+    padding-bottom: 28px;
+    font-size: 18px;
+    line-height: 22px;
+  }
+}
