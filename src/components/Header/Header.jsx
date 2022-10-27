@@ -9,7 +9,7 @@ export default function Header() {
       <Container>
         <div className="header__content">
           <Logotype />
-          <Navigation />
+          <Navigation isAuth={true} />
         </div>
       </Container>
     </header>

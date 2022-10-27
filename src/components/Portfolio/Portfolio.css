@@ -19,9 +19,6 @@
 .portfolio__item {
   margin-bottom: 20px;
   padding-bottom: 9px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   border-bottom: 1px solid #424242;
 }
 
@@ -39,6 +36,8 @@
 
 .portfolio__project-link {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-style: normal;
   font-weight: 400;
   font-size: 30px;

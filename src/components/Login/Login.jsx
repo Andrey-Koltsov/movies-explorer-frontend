@@ -28,6 +28,7 @@ export default function Login() {
             name="email"
             onChange={handleChange}
             value={inputsValue.email}
+            placeholder='Введите ваш email'
           />
           <span className="register__error">{inputsErrorMessage.email}</span>
 
@@ -39,6 +40,7 @@ export default function Login() {
             name="password"
             onChange={handleChange}
             value={inputsValue.password}
+            placeholder='Введите ваш пароль'
           />
           <span className="register__error">{inputsErrorMessage.password}</span>
         </fieldset>

@@ -40,6 +40,22 @@
   transition: .1s opacity linear;
 }
 
+.movies-card__remove {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  background-image: url('../../images/remove-icon.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: .1s opacity linear;
+}
+
+.movies-card__remove:hover {
+  opacity: .7;
+}
+
 .movies-card__save:hover {
   opacity: .7;
 }

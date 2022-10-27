@@ -29,6 +29,7 @@ export default function Register() {
             name="name"
             onChange={handleChange}
             value={inputsValue.name}
+            placeholder='Введите ваше имя'
           />
           <span className="register__error">{inputsErrorMessage.name}</span>
 
@@ -40,6 +41,7 @@ export default function Register() {
             name="email"
             onChange={handleChange}
             value={inputsValue.email}
+            placeholder='Введите ваш email'
           />
           <span className="register__error">{inputsErrorMessage.email}</span>
 
@@ -51,6 +53,7 @@ export default function Register() {
             name="password"
             onChange={handleChange}
             value={inputsValue.password}
+            placeholder='Введите ваш пароль'
           />
           <span className="register__error">{inputsErrorMessage.password}</span>
 

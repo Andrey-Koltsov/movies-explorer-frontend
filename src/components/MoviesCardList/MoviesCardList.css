@@ -21,6 +21,7 @@
   color: #fff;
   cursor: pointer;
   transition: .1s opacity linear;
+  border-radius: 6px;
 }
 
 .movies-card-list__another:hover {
