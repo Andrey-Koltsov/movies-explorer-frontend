@@ -5,17 +5,17 @@ import "./Movies.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
-export default function Movies() {
+export default function Movies({ loggedIn, movies }) {
   return (
     <>
-      <Header />
+      <Header loggedIn={loggedIn} />
       <main className="movies">
         <Container>
           <div className="movies__search">
             <SearchForm />
           </div>
           <div className="movies__list">
-            <MoviesCardList />
+            <MoviesCardList movies={movies} />
           </div>
         </Container>
       </main>

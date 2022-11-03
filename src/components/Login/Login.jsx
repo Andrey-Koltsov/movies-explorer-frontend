@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Logotype from "../Logotype/Logotype";
 import "./Login.css";
 
-export default function Login() {
+export default function Login({ onLogin }) {
   const [inputsValue, setInputsValue] = useState({ email: '', password: '' });
   const [inputsValidity, setInputsValidity] = useState({ email: false, password: false });
   const [inputsErrorMessage, setInputsErrorMessage] = useState({ email: '', password: '' });
@@ -14,11 +14,17 @@ export default function Login() {
     setInputsErrorMessage(prevStat => ({ ...prevStat, [name]: validationMessage }));
   }
 
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    const { email, password } = inputsValue;
+    onLogin({ email, password });
+  }
+
   return (
     <div className="login">
       <Logotype />
       <h1 className="login__title">Рады видеть!</h1>
-      <form className="login__form">
+      <form className="login__form" onSubmit={handleSubmit}>
         <fieldset className="login__fieldset">
           <label htmlFor="" className="register__label">E-mail</label>
           <input
@@ -28,7 +34,7 @@ export default function Login() {
             name="email"
             onChange={handleChange}
             value={inputsValue.email}
-            placeholder='Введите ваш email'
+            placeholder="Введите ваш email"
           />
           <span className="register__error">{inputsErrorMessage.email}</span>
 
@@ -40,11 +46,12 @@ export default function Login() {
             name="password"
             onChange={handleChange}
             value={inputsValue.password}
-            placeholder='Введите ваш пароль'
+            placeholder="Введите ваш пароль"
+            autoComplete="on"
           />
           <span className="register__error">{inputsErrorMessage.password}</span>
         </fieldset>
-        <button className="login__submit" type>Войти</button>
+        <button className="login__submit" type="submit">Войти</button>
       </form>
       <div className="login__inner">
         <span className="login__text">Ещё не зарегистрированы?</span>

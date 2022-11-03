@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Logotype from "../Logotype/Logotype";
 import "./Register.css";
 
-export default function Register() {
+export default function Register({ onRegister }) {
   const [inputsValue, setInputsValue] = useState({ name: '', email: '', password: '' });
   const [inputsValidity, setInputsValidity] = useState({ name: false, email: false, password: false });
   const [inputsErrorMessage, setInputsErrorMessage] = useState({ name: '', email: '', password: '' });
@@ -14,11 +14,17 @@ export default function Register() {
     setInputsErrorMessage(prevStat => ({ ...prevStat, [name]: validationMessage }));
   }
 
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    const {name, email, password} = inputsValue;
+    onRegister({name, email, password});
+  }
+
   return (
     <div className="register">
       <Logotype />
       <h1 className="register__title">Добро пожаловать!</h1>
-      <form className="register__form">
+      <form className="register__form" onSubmit={handleSubmit}>
         <fieldset className="register__fieldset">
 
           <label htmlFor="" className="register__label">Имя</label>
@@ -29,7 +35,7 @@ export default function Register() {
             name="name"
             onChange={handleChange}
             value={inputsValue.name}
-            placeholder='Введите ваше имя'
+            placeholder="Введите ваше имя"
           />
           <span className="register__error">{inputsErrorMessage.name}</span>
 
@@ -41,7 +47,7 @@ export default function Register() {
             name="email"
             onChange={handleChange}
             value={inputsValue.email}
-            placeholder='Введите ваш email'
+            placeholder="Введите ваш email"
           />
           <span className="register__error">{inputsErrorMessage.email}</span>
 
@@ -53,13 +59,14 @@ export default function Register() {
             name="password"
             onChange={handleChange}
             value={inputsValue.password}
-            placeholder='Введите ваш пароль'
+            placeholder="Введите ваш пароль"
+            autoComplete="on"
           />
           <span className="register__error">{inputsErrorMessage.password}</span>
 
 
         </fieldset>
-        <button className="register__submit" type>Зарегистрироваться</button>
+        <button className="register__submit" type="submit">Зарегистрироваться</button>
       </form>
       <div className="register__inner">
         <span className="register__text">Уже зарегистрированы?</span>

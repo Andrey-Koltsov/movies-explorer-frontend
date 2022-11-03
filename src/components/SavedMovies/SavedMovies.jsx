@@ -5,10 +5,10 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import "./SavedMovies.css"
 
-export default function SavedMovies() {
+export default function SavedMovies({ loggedIn }) {
   return (
     <>
-      <Header />
+      <Header loggedIn={loggedIn} />
       <main className="saved-movies">
         <Container>
           <div className="saved-movies__search">
