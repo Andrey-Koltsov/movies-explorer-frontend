@@ -5,7 +5,7 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import "./SavedMovies.css"
 
-export default function SavedMovies({ loggedIn }) {
+export default function SavedMovies({ loggedIn, movies, isMoviesLoaded }) {
   return (
     <>
       <Header loggedIn={loggedIn} />
@@ -15,7 +15,7 @@ export default function SavedMovies({ loggedIn }) {
             <SearchForm />
           </div>
           <div className="saved-movies__list">
-            <MoviesCardList />
+            <MoviesCardList movies={movies} isMoviesLoaded={isMoviesLoaded} />
           </div>
         </Container>
       </main>

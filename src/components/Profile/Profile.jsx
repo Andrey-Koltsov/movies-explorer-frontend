@@ -12,13 +12,10 @@ export default function Profile({ onSignout, loggedIn }) {
     isValid,
     errors,
     resetForm,
-  } = useFormValidation();
-
-  console.log('render component');
+  } = useFormValidation({name: currentUser.name, email: currentUser.email});
 
   function handleBtnSignout() {
     onSignout();
-    console.log('logout');
   }
 
   const handleSubmit = (evt) => {
@@ -42,11 +39,11 @@ export default function Profile({ onSignout, loggedIn }) {
                 id="profile-name"
                 placeholder="Введите ваше имя"
                 name="name"
-                value={values.name}
+                value={values.name ? values.name : ''}
                 onChange={handleChange}
               />
             </fieldset>
-            <span className="register__error">{errors.name}</span>
+            <span className="profile__error">{errors.name ? errors.name : ''}</span>
             <fieldset className="profile__fieldset">
               <label htmlFor="profile-email" className="profile__label">E-mail</label>
               <input
@@ -56,11 +53,11 @@ export default function Profile({ onSignout, loggedIn }) {
                 id="profile-email"
                 placeholder="Введите ваш e-mail"
                 name="email"
-                value={values.email}
+                value={values.email ? values.email : ''}
                 onChange={handleChange}
               />
             </fieldset>
-            <span className="register__error">{errors.email}</span>
+            <span className="profile__error">{errors.email ? errors.email : ''}</span>
           </div>
 
           <button type="submit" className="profile__btn profile__btn_type_submit">Редактировать</button>

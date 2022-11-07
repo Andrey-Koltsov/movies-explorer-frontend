@@ -13,7 +13,7 @@ class MainApi {
   }
 
   register({ name, email, password }) {
-    return fetch(`${this.url}/signup`, {
+    return fetch(`${this._url}/signup`, {
       credentials: 'include',
       method: "POST",
       headers: this._headers,
