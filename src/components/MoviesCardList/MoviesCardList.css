@@ -16,22 +16,6 @@
   padding: 0;
 }
 
-.movies-card-list__another {
-  margin-top: 80px;
-  width: 100%;
-  height: 36px;
-  border: none;
-  background-color: #2F2F2F;
-  color: #fff;
-  cursor: pointer;
-  transition: .1s opacity linear;
-  border-radius: 6px;
-}
-
-.movies-card-list__another:hover {
-  opacity: .8;
-}
-
 @media screen and (max-width: 1024px) {
   .movies-card-list__list {
     grid-template-columns: repeat(3, 1fr);

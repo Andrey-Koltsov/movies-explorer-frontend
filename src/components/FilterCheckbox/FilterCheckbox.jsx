@@ -1,20 +1,14 @@
 import "./FilterCheckbox.css";
 
-export default function FilterCheckbox({ name, checked, onChange, label = '' }) {
+export default function FilterCheckbox({ checked, onChange, label = '' }) {
   return (
-    <label className="filter-checkbox">
-      <input
-        className="filter-checkbox__input"
-        type="checkbox"
-        name={name}
-        checked={checked}
-        onChange={onChange}
-      />
+    <div className="filter-checkbox">
       <span
         type="button"
         className={`filter-checkbox__switch ${checked ? 'filter-checkbox__switch_on' : ''}`}
+        onClick={onChange}
       ></span>
       <span className="filter-checkbox__label">{label}</span>
-    </label>
+    </div>
   );
 };

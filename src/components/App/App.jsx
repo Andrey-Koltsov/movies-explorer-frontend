@@ -18,8 +18,8 @@ import moviesApi from '../../utils/MoviesApi';
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-  const [movies, setMovies] = useState([]);
-  const [isMoviesLoaded, setIsMoviesLoaded] = useState(false);
+  // const [movies, setMovies] = useState([]);
+  // const [isMoviesLoaded, setIsMoviesLoaded] = useState(false);
   const [isReady, setIsReady] = useState(false);
 
   const history = useHistory();
@@ -37,13 +37,13 @@ function App() {
       .finally(() => setIsReady(true));
 
     if (loggedIn) {
-      moviesApi.getMovies()
-        .then(data => {
-          console.log(data);
-          setMovies(data);
-        })
-        .catch(console.log)
-        .finally(() => setIsMoviesLoaded(true));
+      // moviesApi.getMovies()
+      //   .then(data => {
+      //     console.log(data);
+      //     setMovies(data);
+      //   })
+      //   .catch(console.log)
+      //   .finally(() => setIsMoviesLoaded(true));
     }
   }, [loggedIn]);
 
@@ -87,48 +87,48 @@ function App() {
     <div className="app">
       {isReady
         ? <CurrentUserContext.Provider value={currentUser} >
-          <Switch>
-            <ProtectedRoute
-              path="/movies"
-              component={Movies}
-              loggedIn={loggedIn}
-              movies={movies}
-              isMoviesLoaded ={isMoviesLoaded}
-            />
+            <Switch>
+              <ProtectedRoute
+                path="/movies"
+                component={Movies}
+                loggedIn={loggedIn}
+                // movies={movies}
+                // isMoviesLoaded={isMoviesLoaded}
+              />
 
-            <ProtectedRoute
-              path="/saved-movies"
-              component={SavedMovies}
-              loggedIn={loggedIn}
-              movies={movies}
-              isMoviesLoaded ={isMoviesLoaded}
-            />
+              <ProtectedRoute
+                path="/saved-movies"
+                component={SavedMovies}
+                loggedIn={loggedIn}
+                // movies={movies}
+                // isMoviesLoaded={isMoviesLoaded}
+              />
 
-            <ProtectedRoute
-              exact
-              path="/profile"
-              component={Profile}
-              loggedIn={loggedIn}
-              onSignout={handleSignout}
-            />
+              <ProtectedRoute
+                exact
+                path="/profile"
+                component={Profile}
+                loggedIn={loggedIn}
+                onSignout={handleSignout}
+              />
 
-            <Route exact path="/">
-              <Main loggedIn={loggedIn} />
-            </Route>
+              <Route exact path="/">
+                <Main loggedIn={loggedIn} />
+              </Route>
 
-            <Route exact path="/signup">
-              <Register onRegister={handleRegister} />
-            </Route>
+              <Route exact path="/signup">
+                <Register onRegister={handleRegister} />
+              </Route>
 
-            <Route exact path="/signin">
-              <Login onLogin={handleLogin} />
-            </Route>
+              <Route exact path="/signin">
+                <Login onLogin={handleLogin} />
+              </Route>
 
-            <Route>
-              <NotFound />
-            </Route>
-          </Switch>
-        </CurrentUserContext.Provider>
+              <Route>
+                <NotFound />
+              </Route>
+            </Switch>
+          </CurrentUserContext.Provider>
         : ''
       }
 
