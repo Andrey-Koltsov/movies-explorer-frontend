@@ -12,14 +12,13 @@ import moviesApi from "../../utils/MoviesApi";
 
 export default function Movies({ loggedIn }) {
   const [movies, setMovies] = useState([]);
-  const [isMoviesLoaded, setIsMoviesLoaded] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [searchString, setSearchString] = useState('');
   const [shortMovies, setShortMovies] = useState(false);
   const [filteredMovies, setFilteredMovies] = useState([]);
 
   useEffect(() => {
-    console.log('mounted movies');
     const moviesFilter = JSON.parse(localStorage.getItem('movies'));
     const shortMoviesFilter = JSON.parse(localStorage.getItem('shortMovies'));
     const searchStringFilter = JSON.parse(localStorage.getItem('searchString'));
@@ -33,17 +32,15 @@ export default function Movies({ loggedIn }) {
 
   function handleSearch(searchValue) {
     if (!movies.length) {
-      setIsMoviesLoaded(false);
+      setIsLoading(true);
       moviesApi.getMovies()
         .then(data => {
-          console.log(data);
           localStorage.setItem('movies', JSON.stringify(data));
           setMovies(data);
           setFilteredMovies(filterMovies(searchValue, shortMovies, data));
-
         })
         .catch(console.log)
-        .finally(() => setIsMoviesLoaded(true));
+        .finally(() => setIsLoading(false));
     } else {
       setFilteredMovies(filterMovies(searchValue, shortMovies, movies));
     }
@@ -72,9 +69,9 @@ export default function Movies({ loggedIn }) {
             />
           </div>
           <div className="movies__list">
-            {isMoviesLoaded
-              ? <MoviesCardList movies={filteredMovies} />
-              : <Preloader />
+            {isLoading
+              ? <Preloader />
+              : <MoviesCardList movies={filteredMovies} />
             }
           </div>
           <button className="movies__another" type="button">Еще</button>

@@ -90,6 +90,15 @@
   opacity: .8;
 }
 
+.login__submit_disable {
+  background-color: #F8F8F8;
+  color: #000;
+}
+
+.login__submit_disable:hover {
+  opacity: 1;
+}
+
 .login__inner {
   margin-top: 18px;
   display: flex;

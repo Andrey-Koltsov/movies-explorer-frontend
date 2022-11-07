@@ -90,6 +90,15 @@
   opacity: .8;
 }
 
+.register__submit_disable {
+  background-color: #F8F8F8;
+  color: #000;
+}
+
+.register__submit_disable:hover {
+  opacity: 1;
+}
+
 .register__inner {
   margin-top: 18px;
   display: flex;

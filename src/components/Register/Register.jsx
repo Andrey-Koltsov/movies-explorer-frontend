@@ -1,72 +1,73 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useFormValidation } from "../../hooks/useFormValidation";
 import Logotype from "../Logotype/Logotype";
 import "./Register.css";
 
 export default function Register({ onRegister }) {
-  const [inputsValue, setInputsValue] = useState({ name: '', email: '', password: '' });
-  const [inputsValidity, setInputsValidity] = useState({ name: false, email: false, password: false });
-  const [inputsErrorMessage, setInputsErrorMessage] = useState({ name: '', email: '', password: '' });
-
-  function handleChange({ target: { name, value, validity, validationMessage } }) {
-    setInputsValue(prevStat => ({ ...prevStat, [name]: value }));
-    setInputsValidity(prevStat => ({ ...prevStat, [name]: validity.valid }));
-    setInputsErrorMessage(prevStat => ({ ...prevStat, [name]: validationMessage }));
-  }
+  const {
+    values,
+    handleChange,
+    isValid,
+    errors,
+    inputsValid
+  } = useFormValidation();
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    const {name, email, password} = inputsValue;
-    onRegister({name, email, password});
+    if (isValid) {
+      const { name, email, password } = values;
+      onRegister({ name, email, password });
+    }
   }
 
   return (
     <div className="register">
       <Logotype />
       <h1 className="register__title">Добро пожаловать!</h1>
-      <form className="register__form" onSubmit={handleSubmit}>
+      <form className="register__form" onSubmit={handleSubmit} noValidate>
         <fieldset className="register__fieldset">
-
           <label htmlFor="" className="register__label">Имя</label>
           <input
             required
             type="text"
-            className={`register__input ${inputsValidity.name ? "" : "register__input_error"}`}
+            className={`register__input ${inputsValid.name ? "" : "register__input_error"}`}
             name="name"
             onChange={handleChange}
-            value={inputsValue.name}
+            value={values.name ? values.name : ""}
             placeholder="Введите ваше имя"
           />
-          <span className="register__error">{inputsErrorMessage.name}</span>
+          <span className="register__error">{errors.name}</span>
 
           <label htmlFor="" className="register__label">E-mail</label>
           <input
             required
             type="email"
-            className={`register__input ${inputsValidity.email ? "" : "register__input_error"}`}
+            className={`register__input ${inputsValid.email ? "" : "register__input_error"}`}
             name="email"
             onChange={handleChange}
-            value={inputsValue.email}
+            value={values.email ? values.email : ""}
             placeholder="Введите ваш email"
           />
-          <span className="register__error">{inputsErrorMessage.email}</span>
+          <span className="register__error">{errors.email}</span>
 
           <label htmlFor="" className="register__label">Пароль</label>
           <input
             required
             type="password"
-            className={`register__input ${inputsValidity.password ? "" : "register__input_error"}`}
+            className={`register__input ${inputsValid.password ? "" : "register__input_error"}`}
             name="password"
             onChange={handleChange}
-            value={inputsValue.password}
+            value={values.password ? values.password : ""}
             placeholder="Введите ваш пароль"
             autoComplete="on"
           />
-          <span className="register__error">{inputsErrorMessage.password}</span>
-
-
+          <span className="register__error">{errors.password}</span>
         </fieldset>
-        <button className="register__submit" type="submit">Зарегистрироваться</button>
+        <button
+          className={`register__submit ${isValid ? "" : "register__submit_disable"} `}
+          type="submit"
+          disabled={!isValid}
+        >Зарегистрироваться</button>
       </form>
       <div className="register__inner">
         <span className="register__text">Уже зарегистрированы?</span>
