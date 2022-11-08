@@ -9,50 +9,45 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Preloader from "../Preloader/Preloader";
 import moviesApi from "../../utils/MoviesApi";
+import useMoviesFilter from "../../hooks/useMoviesFilter";
 
-export default function Movies({ loggedIn }) {
+export default function Movies({ loggedIn, onSaveMovie, onRemoveMovie, myMovies }) {
   const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [searchString, setSearchString] = useState('');
-  const [shortMovies, setShortMovies] = useState(false);
-  const [filteredMovies, setFilteredMovies] = useState([]);
+  const { filter, setIsShort, filteredList, isShort, searchString } = useMoviesFilter();
 
   useEffect(() => {
     const moviesFilter = JSON.parse(localStorage.getItem('movies'));
     const shortMoviesFilter = JSON.parse(localStorage.getItem('shortMovies'));
     const searchStringFilter = JSON.parse(localStorage.getItem('searchString'));
-    if (moviesFilter && searchStringFilter) {
+    if (moviesFilter) {
       setMovies(moviesFilter);
-      setShortMovies(shortMoviesFilter);
-      setSearchString(searchStringFilter);
-      setFilteredMovies(filterMovies(searchStringFilter, shortMoviesFilter, moviesFilter));
+      filter(searchStringFilter, moviesFilter)
+      setIsShort(shortMoviesFilter);
     }
-  }, []);
+  }, [filter, setIsShort]);
 
   function handleSearch(searchValue) {
     if (!movies.length) {
       setIsLoading(true);
       moviesApi.getMovies()
         .then(data => {
-          localStorage.setItem('movies', JSON.stringify(data));
           setMovies(data);
-          setFilteredMovies(filterMovies(searchValue, shortMovies, data));
+          filter(searchValue, data);
+          localStorage.setItem('movies', JSON.stringify(data));
         })
         .catch(console.log)
         .finally(() => setIsLoading(false));
     } else {
-      setFilteredMovies(filterMovies(searchValue, shortMovies, movies));
+      filter(searchValue, movies);
     }
-    setSearchString(searchValue);
     localStorage.setItem('searchString', JSON.stringify(searchValue));
-    localStorage.setItem('shortMovies', JSON.stringify(shortMovies));
   }
 
   function handleChangeCheckbox() {
-    localStorage.setItem('shortMovies', JSON.stringify(!shortMovies));
-    setFilteredMovies(filterMovies(searchString, !shortMovies, movies));
-    setShortMovies(!shortMovies);
+    localStorage.setItem('shortMovies', JSON.stringify(!isShort));
+    setIsShort(!isShort);
   }
 
   return (
@@ -63,7 +58,7 @@ export default function Movies({ loggedIn }) {
           <div className="movies__search">
             <SearchForm
               searchString={searchString}
-              checkbox={shortMovies}
+              checkbox={isShort}
               onSubmit={handleSearch}
               onChangeCheckbox={handleChangeCheckbox}
             />
@@ -71,10 +66,13 @@ export default function Movies({ loggedIn }) {
           <div className="movies__list">
             {isLoading
               ? <Preloader />
-              : <MoviesCardList movies={filteredMovies} />
+              : <MoviesCardList
+                movies={filteredList}
+                onSaveMovie={onSaveMovie}
+                onRemoveMovie={onRemoveMovie}
+              />
             }
           </div>
-          <button className="movies__another" type="button">Еще</button>
         </Container>
       </main>
       <Footer />

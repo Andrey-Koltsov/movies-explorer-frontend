@@ -1,4 +1,6 @@
 .movies-card {
+  display: flex;
+  flex-direction: column;
   height: 100%;
   overflow: hidden;
   border-radius: 10px;
@@ -20,6 +22,7 @@
   display: grid;
   grid-template-columns: auto 16px;
   gap: 10px 24px;
+  flex-grow: 1;
 }
 
 .movies-card__title {
@@ -71,7 +74,7 @@
   font-size: 11px;
   line-height: 13px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   color: #8B8B8B;
 }
 

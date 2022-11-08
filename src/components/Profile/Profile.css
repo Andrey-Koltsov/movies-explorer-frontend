@@ -85,7 +85,7 @@
 }
 
 .profile__btn_type_submit {
-  margin-top: 270px;
+  margin-top: 10px;
 }
 
 .profile__btn_type_exit {
@@ -94,10 +94,23 @@
   color: #EE3465;
 }
 
-
-
 .profile__btn:hover {
   opacity: .7;
+}
+
+.profile__btn_disable {
+  opacity: .4;
+}
+
+.profile__btn_disable:hover {
+  opacity: .4;
+}
+
+.profile__submit {
+  margin-top: 270px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 @media screen and (max-width: 768px) {

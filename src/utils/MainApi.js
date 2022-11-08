@@ -1,8 +1,9 @@
+import { BEATFILM_URL } from "./constants";
+
 class MainApi {
   constructor({ url, headers }) {
     this._url = url;
     this._headers = headers;
-
   }
 
   _checkResponse(res) {
@@ -48,6 +49,55 @@ class MainApi {
       .then(this._checkResponse);
   }
 
+  updateUserInfo(data) {
+    return fetch(`${this._url}/users/me`, {
+      credentials: 'include',
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify(data)
+    })
+      .then(this._checkResponse);
+  }
+
+  getMovies() {
+    return fetch(`${this._url}/movies`, {
+      credentials: 'include',
+      headers: this._headers
+    })
+      .then(this._checkResponse);
+  }
+
+  removeMovie(id) {
+    return fetch(`${this._url}/movies/${id}`, {
+      credentials: 'include',
+      method: "DELETE",
+      headers: this._headers
+    })
+      .then(this._checkResponse);
+  }
+
+  saveMovie(data) {
+    console.log(data);
+    return fetch(`${this._url}/movies`, {
+      credentials: 'include',
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        country: data.country,
+        director: data.director,
+        duration: data.duration,
+        year: data.year,
+        description: data.description,
+        image: BEATFILM_URL + data.image.url,
+        trailerLink: data.trailerLink,
+        thumbnail: BEATFILM_URL + data.image.url,
+        movieId: data.id,
+        nameRU: data.nameRU,
+        nameEN: data.nameEN,
+      }),
+    })
+      .then(this._checkResponse);
+  }
 }
 
 const mainApi = new MainApi({
