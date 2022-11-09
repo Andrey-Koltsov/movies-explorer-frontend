@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import filterMovies from "../../utils/filterMovies";
 import "./Movies.css";
 
 import Container from "../Container/Container";
@@ -11,11 +10,17 @@ import Preloader from "../Preloader/Preloader";
 import moviesApi from "../../utils/MoviesApi";
 import useMoviesFilter from "../../hooks/useMoviesFilter";
 
-export default function Movies({ loggedIn, onSaveMovie, onRemoveMovie, myMovies }) {
+export default function Movies({ savedMovies, onChangeMovie }) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const { filter, setIsShort, filteredList, isShort, searchString } = useMoviesFilter();
+  const [isErrorLoading, setIsErrorLoading] = useState(false);
+  const {
+    filter,
+    setIsShort,
+    filteredMovies,
+    isShort,
+    searchString
+  } = useMoviesFilter();
 
   useEffect(() => {
     const moviesFilter = JSON.parse(localStorage.getItem('movies'));
@@ -29,7 +34,9 @@ export default function Movies({ loggedIn, onSaveMovie, onRemoveMovie, myMovies 
   }, [filter, setIsShort]);
 
   function handleSearch(searchValue) {
+    console.log(searchValue);
     if (!movies.length) {
+      setIsErrorLoading(false);
       setIsLoading(true);
       moviesApi.getMovies()
         .then(data => {
@@ -37,7 +44,10 @@ export default function Movies({ loggedIn, onSaveMovie, onRemoveMovie, myMovies 
           filter(searchValue, data);
           localStorage.setItem('movies', JSON.stringify(data));
         })
-        .catch(console.log)
+        .catch(err => {
+          console.log(err);
+          setIsErrorLoading(true);
+        })
         .finally(() => setIsLoading(false));
     } else {
       filter(searchValue, movies);
@@ -52,7 +62,7 @@ export default function Movies({ loggedIn, onSaveMovie, onRemoveMovie, myMovies 
 
   return (
     <>
-      <Header loggedIn={loggedIn} />
+      <Header />
       <main className="movies">
         <Container>
           <div className="movies__search">
@@ -64,13 +74,18 @@ export default function Movies({ loggedIn, onSaveMovie, onRemoveMovie, myMovies 
             />
           </div>
           <div className="movies__list">
-            {isLoading
-              ? <Preloader />
-              : <MoviesCardList
-                movies={filteredList}
-                onSaveMovie={onSaveMovie}
-                onRemoveMovie={onRemoveMovie}
+            {movies.length
+              ? <MoviesCardList
+                movies={filteredMovies}
+                savedMovies={savedMovies}
+                onChangeMovie={onChangeMovie}
               />
+              : <></>
+            }
+            {isLoading ? <Preloader /> : <></>}
+            {isErrorLoading
+              ? <div className="movies__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</div>
+              : <></>
             }
           </div>
         </Container>

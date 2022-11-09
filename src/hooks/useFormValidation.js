@@ -6,6 +6,11 @@ export function useFormValidation(initValues = {}) {
   const [inputsValid, setInputsValid] = useState({});
   const [isValid, setIsValid] = useState(false);
 
+  const checkValidityFormSubmit = (evt) => {
+    setIsValid(evt.target.closest("form").checkValidity());
+    return evt.target.closest("form").checkValidity();
+  }
+
   const handleChange = (evt) => {
     const target = evt.target;
     const {
@@ -33,5 +38,14 @@ export function useFormValidation(initValues = {}) {
     setIsValid(newIsValid);
   }, []);
 
-  return { values, handleChange, errors, inputsValid, isValid, resetForm };
+  return {
+    values,
+    handleChange,
+    errors,
+    inputsValid,
+    isValid,
+    setIsValid,
+    resetForm,
+    checkValidityFormSubmit
+  };
 }

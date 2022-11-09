@@ -8,8 +8,8 @@ export default function SearchForm({ searchString, checkbox, onSubmit, onChangeC
   const {
     values,
     handleChange,
-    isValid,
-    resetForm
+    resetForm,
+    checkValidityFormSubmit
   } = useFormValidation();
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function SearchForm({ searchString, checkbox, onSubmit, onChangeC
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    if (isValid) {
+    if (checkValidityFormSubmit(evt)) {
       setShowErrorMessage(false);
       onSubmit(values.searchString);
     } else {

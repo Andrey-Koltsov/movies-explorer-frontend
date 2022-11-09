@@ -1,10 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import CurrentUserContext from "../../context/CurrentUserContext";
 import { useFormValidation } from "../../hooks/useFormValidation";
-import Header from "../Header/Header";
 import "./Profile.css";
 
-export default function Profile({ onSignout, loggedIn, onUpdate, message }) {
+import Header from "../Header/Header";
+
+export default function Profile({ onSignout, onUpdate }) {
   const currentUser = useContext(CurrentUserContext);
   const {
     values,
@@ -24,7 +25,7 @@ export default function Profile({ onSignout, loggedIn, onUpdate, message }) {
 
   return (
     <>
-      <Header loggedIn={loggedIn} />
+      <Header />
       <main className="profile">
         <h1 className="profile__title">Привет, {currentUser.name}!</h1>
         <form className="profile__form" onSubmit={handleSubmit}>
@@ -61,7 +62,6 @@ export default function Profile({ onSignout, loggedIn, onUpdate, message }) {
             {errors.email && <span className="profile__error">{errors.email}</span>}
           </div>
           <div className="profile__submit">
-            {message && <span className="profile__error">{message}</span>}
             <button
               type="submit"
               className={`profile__btn profile__btn_type_submit ${isValid ? '' : 'profile__btn_disable'}`}
@@ -71,6 +71,7 @@ export default function Profile({ onSignout, loggedIn, onUpdate, message }) {
         </form>
         <button type="button" className="profile__btn profile__btn_type_exit" onClick={handleBtnSignout}>Выйти из аккаунта</button>
       </main>
+
     </>
   );
 };

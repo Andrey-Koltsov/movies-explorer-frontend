@@ -63,14 +63,6 @@
   border-radius: 4px;
 }
 
-.profile__error {
-  margin-top: 6px;
-  color: #EE3465;
-  font-weight: 400;
-  font-size: 10px;
-  line-height: 12px;
-}
-
 .profile__btn {
   background-color: transparent;
   border: none;

@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { BEATFILM_URL } from "../../utils/constants";
 import "./MoviesCard.css";
 
-export default function MoviesCard({ movie, onSaveMovie, onRemoveMovie, isSaved }) {
+export default function MoviesCard({ movie, isSaved, onChangeMovie }) {
   const [saved, setSaved] = useState(isSaved);
   const { pathname } = useLocation();
 
@@ -15,15 +15,15 @@ export default function MoviesCard({ movie, onSaveMovie, onRemoveMovie, isSaved 
 
   function handleToggle() {
     if (saved) {
-      onRemoveMovie(movie);
+      onChangeMovie('remove', movie);
     } else {
-      onSaveMovie(movie);
+      onChangeMovie('save', movie);
     }
     setSaved(!saved);
   }
 
   function handleRemove() {
-    onRemoveMovie(movie);
+    onChangeMovie('remove', movie);
   }
 
   return (
@@ -33,7 +33,7 @@ export default function MoviesCard({ movie, onSaveMovie, onRemoveMovie, isSaved 
         <div className="movies-card__title">{movie.nameRU}</div>
         {pathname === '/saved-movies'
           ? <button className="movies-card__remove" type="button" onClick={handleRemove} />
-          : <button className={`movies-card__save ${saved ? 'movies-card__save_saved' : ''}`} type="button" onClick={handleToggle} />
+          : <button className={`movies-card__save ${saved && 'movies-card__save_saved'}`} type="button" onClick={handleToggle} />
         }
         <div className="movies-card__time">{durationToString(movie.duration)}</div>
       </div>

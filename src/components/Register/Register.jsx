@@ -9,12 +9,13 @@ export default function Register({ onRegister }) {
     handleChange,
     isValid,
     errors,
-    inputsValid
+    inputsValid,
+    checkValidityFormSubmit
   } = useFormValidation();
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    if (isValid) {
+    if (checkValidityFormSubmit(evt)) {
       const { name, email, password } = values;
       onRegister({ name, email, password });
     }

@@ -9,12 +9,13 @@ export default function Login({ onLogin }) {
     handleChange,
     isValid,
     errors,
-    inputsValid
+    inputsValid,
+    checkValidityFormSubmit
   } = useFormValidation();
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    if (isValid) {
+    if (checkValidityFormSubmit(evt)) {
       const { email, password } = values;
       onLogin({ email, password });
     }

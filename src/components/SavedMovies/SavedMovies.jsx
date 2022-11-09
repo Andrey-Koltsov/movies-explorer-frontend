@@ -8,11 +8,11 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import "./SavedMovies.css"
 
-export default function SavedMovies({ loggedIn, myMovies, isMoviesLoaded, onRemoveMovie }) {
+export default function SavedMovies({ savedMovies, isMoviesLoaded, onChangeMovie }) {
   const {
     filter,
     setIsShort,
-    filteredList,
+    filteredMovies,
     isShort,
     searchString
   } = useMoviesFilter();
@@ -21,16 +21,16 @@ export default function SavedMovies({ loggedIn, myMovies, isMoviesLoaded, onRemo
     const shortMoviesFilter = JSON.parse(localStorage.getItem('myShortMovies'));
     const searchStringFilter = JSON.parse(localStorage.getItem('mySearchString'));
     if (searchStringFilter) {
-      filter(searchStringFilter, myMovies);
+      filter(searchStringFilter, savedMovies);
       setIsShort(shortMoviesFilter);
     } else {
-      filter('', myMovies);
+      filter('', savedMovies);
       setIsShort(shortMoviesFilter);
     }
-  }, [filter, setIsShort, myMovies]);
+  }, [filter, setIsShort, savedMovies]);
 
   function handleSearch(searchValue) {
-    filter(searchValue, myMovies);
+    filter(searchValue, savedMovies);
     localStorage.setItem('mySearchString', JSON.stringify(searchValue));
   }
 
@@ -41,7 +41,7 @@ export default function SavedMovies({ loggedIn, myMovies, isMoviesLoaded, onRemo
 
   return (
     <>
-      <Header loggedIn={loggedIn} />
+      <Header />
       <main className="saved-movies">
         <Container>
           <div className="saved-movies__search">
@@ -51,13 +51,16 @@ export default function SavedMovies({ loggedIn, myMovies, isMoviesLoaded, onRemo
               onSubmit={handleSearch}
               onChangeCheckbox={handleChangeCheckbox} />
           </div>
-          <div className="saved-movies__list">
-            <MoviesCardList
-              movies={filteredList}
-              isMoviesLoaded={isMoviesLoaded}
-              onRemoveMovie={onRemoveMovie}
-            />
-          </div>
+          {savedMovies.length
+            ? <div className="saved-movies__list">
+              <MoviesCardList
+                movies={filteredMovies}
+                isMoviesLoaded={isMoviesLoaded}
+                onChangeMovie={onChangeMovie}
+              />
+            </div>
+            : <></>
+          }
         </Container>
       </main>
       <Footer />

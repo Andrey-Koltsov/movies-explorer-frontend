@@ -7,10 +7,10 @@ import Portfolio from "../Portfolio/Portfolio";
 import Promo from "../Promo/Promo";
 import Techs from "../Techs/Techs";
 
-export default function Main({ loggedIn }) {
+export default function Main() {
   return (
     <>
-      <Header loggedIn={loggedIn} />
+      <Header />
       <main className="main">
         <Promo />
         <Scroll.Element name="about-project">

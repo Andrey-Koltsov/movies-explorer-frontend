@@ -9,7 +9,7 @@ export default function Header({ loggedIn }) {
       <Container>
         <div className="header__content">
           <Logotype />
-          <Navigation loggedIn={loggedIn} />
+          <Navigation />
         </div>
       </Container>
     </header>

@@ -6,11 +6,11 @@ class MainApi {
     this._headers = headers;
   }
 
-  _checkResponse(res) {
-    if (res.ok) {
-      return res.json();
+  _checkResponse(response) {
+    if (response.ok) {
+      return response.json();
     }
-    return Promise.reject(`Ошибка: ${res.status}, ${res.statusText}`);
+    return Promise.reject({response, text: `Ошибка: ${response.status}, ${response.statusText}`});
   }
 
   register({ name, email, password }) {
@@ -77,7 +77,6 @@ class MainApi {
   }
 
   saveMovie(data) {
-    console.log(data);
     return fetch(`${this._url}/movies`, {
       credentials: 'include',
       method: "POST",

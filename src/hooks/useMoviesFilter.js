@@ -11,15 +11,18 @@ export default function useMoviesFilter() {
   }, [filtered]);
 
   const filter = useCallback((value, list) => {
-    setSearchString(value);
-    const filtered = list.filter((item) => {
-      return item.nameRU.toLowerCase().indexOf(value.toLowerCase()) !== -1;
-    });
-    setFiltered(filtered);
+    console.log(typeof value);
+    if (typeof value === 'string') {
+      setSearchString(value);
+      const filtered = list.filter((item) => {
+        return item.nameRU.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+      });
+      setFiltered(filtered);
+    }
   }, []);
 
   return {
-    filteredList: isShort ? filteredShort : filtered,
+    filteredMovies: isShort ? filteredShort : filtered,
     filter,
     searchString,
     isShort,

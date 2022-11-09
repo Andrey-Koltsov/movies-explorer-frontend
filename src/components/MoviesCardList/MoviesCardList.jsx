@@ -2,11 +2,19 @@ import useCounterCard from "../../hooks/useCounterCard";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
 
-export default function MoviesCardList({ movies, onSaveMovie, onRemoveMovie }) {
+export default function MoviesCardList({ movies, savedMovies, onChangeMovie }) {
   const { count, step } = useCounterCard();
 
   function handleAnother() {
     step()
+  }
+
+  function checkSavedMovie(id) {
+    if (id) {
+      const isSaved = savedMovies.find(item => item.movieId === id);
+      return isSaved !== undefined;
+    }
+    return false;
   }
 
   return (
@@ -16,7 +24,11 @@ export default function MoviesCardList({ movies, onSaveMovie, onRemoveMovie }) {
           {movies.slice(0, count).map(movie => {
             return (
               <li key={movie.id ? movie.id : movie['_id']} className="movies-card-list__item">
-                <MoviesCard movie={movie} onSaveMovie={onSaveMovie} onRemoveMovie={onRemoveMovie} isSaved={false} />
+                <MoviesCard
+                  movie={movie}
+                  onChangeMovie={onChangeMovie}
+                  isSaved={checkSavedMovie(movie.id)}
+                />
               </li>
             )
           })}
