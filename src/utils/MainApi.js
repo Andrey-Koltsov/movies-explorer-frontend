@@ -1,4 +1,4 @@
-import { BEATFILM_URL } from "./constants";
+import { API_URL, BEATFILM_URL } from "./constants";
 
 class MainApi {
   constructor({ url, headers }) {
@@ -100,7 +100,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  url: 'http://localhost:3001',
+  url: API_URL,
   headers: {
     "Content-Type": "application/json",
   }
