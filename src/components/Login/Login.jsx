@@ -23,7 +23,7 @@ export default function Login({ onLogin }) {
 
   return (
     <div className="login">
-      <Logotype />
+      < Logotype />
       <h1 className="login__title">Рады видеть!</h1>
       <form className="login__form" onSubmit={handleSubmit} noValidate>
         <fieldset className="login__fieldset">
@@ -62,6 +62,6 @@ export default function Login({ onLogin }) {
         <span className="login__text">Ещё не зарегистрированы?</span>
         <Link to='/signup' className="login__link">Регистрация</Link>
       </div>
-    </div>
+    </div >
   );
 };

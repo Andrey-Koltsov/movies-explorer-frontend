@@ -28,7 +28,18 @@ export default function MoviesCard({ movie, isSaved, onChangeMovie }) {
 
   return (
     <div className="movies-card">
-      <img src={movie.thumbnail ? movie.thumbnail : BEATFILM_URL + movie.image.url} alt="Постер фильма" className="movies-card__image" />
+      <a
+        className="movies-card__link"
+        href={movie.trailerLink}
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <img
+          src={movie.thumbnail ? movie.thumbnail : BEATFILM_URL + movie.image.url}
+          alt="Постер фильма"
+          className="movies-card__image"
+        />
+      </a>
       <div className="movies-card__info">
         <div className="movies-card__title">{movie.nameRU}</div>
         {pathname === '/saved-movies'

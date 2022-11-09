@@ -3,7 +3,6 @@ import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import './App.css';
 
 import CurrentUserContext from '../../context/CurrentUserContext';
-import AuthUserContext from '../../context/AuthUserContext';
 
 import Main from '../Main/Main';
 import Login from '../Login/Login';
@@ -15,6 +14,14 @@ import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
 import Popup from '../Popup/Popup';
 import mainApi from '../../utils/MainApi';
+import {
+  MESSAGE_ERROR_LOGIN,
+  MESSAGE_ERROR_REGISTER,
+  MESSAGE_ERROR_SERVER,
+  MESSAGE_ERROR_UPDATE,
+  MESSAGE_UPDATE
+} from '../../utils/constants';
+import RedirectRoute from '../RedirectRoute/RedirectRoute';
 
 function App() {
   const [isReady, setReady] = useState(false);
@@ -25,10 +32,6 @@ function App() {
 
   const history = useHistory();
   const location = useLocation();
-
-  useEffect(() => {
-    setPopup(prevStat => ({...prevStat, status: false}));
-  }, [location]);
 
   useEffect(() => {
     setReady(false);
@@ -51,22 +54,9 @@ function App() {
     }
   }, [loggedIn]);
 
-  function handleRegister({ name, email, password }) {
-    mainApi.register({ name, email, password })
-      .then(data => {
-        console.log(data);
-        setLoggedIn(true);
-        history.push('/movies');
-      })
-      .catch(err => {
-        if (err.response.status === 409) {
-          setPopup({ status: true, text: 'Пользователь с таким E-mail уже существует' });
-        } else {
-          setPopup({ status: true, text: 'Произошла ошибка на сервере' });
-        }
-        console.log(err)
-      });
-  }
+  useEffect(() => {
+    setPopup(prevStat => ({ ...prevStat, status: false }));
+  }, [location]);
 
   function handleLogin({ email, password }) {
     mainApi.auth({ email, password })
@@ -77,9 +67,26 @@ function App() {
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          setPopup({ status: true, text: 'Неправильный логин или пароль' });
+          setPopup({ status: true, text: MESSAGE_ERROR_LOGIN });
         } else {
-          setPopup({ status: true, text: 'Произошла ошибка на сервере' });
+          setPopup({ status: true, text: MESSAGE_ERROR_SERVER });
+        }
+        console.log(err)
+      });
+  }
+
+  function handleRegister({ name, email, password }) {
+    mainApi.register({ name, email, password })
+      .then(data => {
+        console.log(data);
+        setLoggedIn(true);
+        history.push('/movies');
+      })
+      .catch(err => {
+        if (err.response.status === 409) {
+          setPopup({ status: true, text: MESSAGE_ERROR_REGISTER });
+        } else {
+          setPopup({ status: true, text: MESSAGE_ERROR_SERVER });
         }
         console.log(err)
       });
@@ -90,6 +97,7 @@ function App() {
       .then(data => {
         console.log(data);
         setLoggedIn(false);
+        setCurrentUser({})
         history.push('/');
         localStorage.clear();
       })
@@ -119,70 +127,74 @@ function App() {
       mainApi.updateUserInfo(data)
         .then(res => {
           setCurrentUser(res);
-          setPopup({ status: true, text: 'Данные успешно обновлены!' });
+          setPopup({ status: true, text: MESSAGE_UPDATE });
         })
         .catch(err => {
           console.log(err);
-          setPopup({ status: true, text: 'Ошибка обновления данных!' });
+          setPopup({ status: true, text: MESSAGE_ERROR_SERVER });
         });
     } else {
-      setPopup({ status: true, text: 'Имя или E-mail не могут быть одинаковыми' });
+      setPopup({ status: true, text: MESSAGE_ERROR_UPDATE });
     }
   }
 
   function popupClose() {
-    setPopup(prevStat => ({...prevStat, status: false}));
+    setPopup(prevStat => ({ ...prevStat, status: false }));
   }
 
   return (
     <div className="app">
       {isReady
-        ? <AuthUserContext.Provider value={loggedIn} >
-          <CurrentUserContext.Provider value={currentUser} >
-            <Switch>
-              <ProtectedRoute
-                exact
-                path="/movies"
-                component={Movies}
-                savedMovies={savedMovies}
-                onChangeMovie={handleChangeMovie}
-              />
+        ? <CurrentUserContext.Provider value={currentUser} >
+          <Switch>
+            <Route exact path="/">
+              <Main />
+            </Route>
 
-              <ProtectedRoute
-                exact
-                path="/saved-movies"
-                component={SavedMovies}
-                savedMovies={savedMovies}
-                onChangeMovie={handleChangeMovie}
-              />
+            <RedirectRoute
+              exact
+              path="/signin"
+              component={Login}
+              onLogin={handleLogin}
+            />
 
-              <ProtectedRoute
-                exact
-                path="/profile"
-                component={Profile}
-                onSignout={handleSignout}
-                onUpdate={handleUpdateUser}
-              />
+            <RedirectRoute
+              exact
+              path="/signup"
+              component={Register}
+              onRegister={handleRegister}
+            />
 
-              <Route exact path="/">
-                <Main />
-              </Route>
+            <ProtectedRoute
+              exact
+              path="/movies"
+              component={Movies}
+              savedMovies={savedMovies}
+              onChangeMovie={handleChangeMovie}
+            />
 
-              <Route exact path="/signup">
-                <Register onRegister={handleRegister} />
-              </Route>
+            <ProtectedRoute
+              exact
+              path="/saved-movies"
+              component={SavedMovies}
+              savedMovies={savedMovies}
+              onChangeMovie={handleChangeMovie}
+            />
 
-              <Route exact path="/signin">
-                <Login onLogin={handleLogin} />
-              </Route>
+            <ProtectedRoute
+              exact
+              path="/profile"
+              component={Profile}
+              onSignout={handleSignout}
+              onUpdate={handleUpdateUser}
+            />
 
-              <Route>
-                <NotFound />
-              </Route>
-            </Switch>
-          </CurrentUserContext.Provider>
-        </AuthUserContext.Provider>
-        : ''
+            <Route>
+              <NotFound />
+            </Route>
+          </Switch>
+        </CurrentUserContext.Provider>
+        : <></>
       }
       <Popup
         isOpen={popup.status}

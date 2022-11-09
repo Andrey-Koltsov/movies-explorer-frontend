@@ -11,7 +11,6 @@ export default function useMoviesFilter() {
   }, [filtered]);
 
   const filter = useCallback((value, list) => {
-    console.log(typeof value);
     if (typeof value === 'string') {
       setSearchString(value);
       const filtered = list.filter((item) => {
