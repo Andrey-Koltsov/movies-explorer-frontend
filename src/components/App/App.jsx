@@ -79,6 +79,7 @@ function App() {
     mainApi.register({ name, email, password })
       .then(data => {
         console.log(data);
+        setCurrentUser(data);
         setLoggedIn(true);
         history.push('/movies');
       })
