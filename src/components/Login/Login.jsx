@@ -1,52 +1,46 @@
 import { Link } from "react-router-dom";
-import { useFormValidation } from "../../hooks/useFormValidation";
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 import Logotype from "../Logotype/Logotype";
 import "./Login.css";
+import { VALIDATE_MESSAGE_EMAIL, VALIDATE_MESSAGE_REQUIRED } from "../../utils/constants";
 
 export default function Login({ onLogin }) {
-  const {
-    values,
-    handleChange,
-    isValid,
-    errors,
-    inputsValid,
-  } = useFormValidation();
+  const schema = yup.object({
+    email: yup.string().required(VALIDATE_MESSAGE_REQUIRED).email(VALIDATE_MESSAGE_EMAIL),
+    password: yup.string().required(VALIDATE_MESSAGE_REQUIRED),
+  }).required();
 
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    onLogin(values);
-  }
+  const { register, handleSubmit, formState: { errors, isValid } } = useForm({
+    mode: 'onChange',
+    resolver: yupResolver(schema)
+  });
 
   return (
     <div className="login">
       < Logotype />
       <h1 className="login__title">Рады видеть!</h1>
-      <form className="login__form" onSubmit={handleSubmit} noValidate>
+      <form className="login__form" onSubmit={handleSubmit(onLogin)} noValidate>
         <fieldset className="login__fieldset">
-          <label htmlFor="" className="register__label">E-mail</label>
+          <label htmlFor="" className="login__label">E-mail</label>
           <input
-            required
             type="email"
-            className={`register__input ${inputsValid.email ? "" : "register__input_error"}`}
-            name="email"
-            onChange={handleChange}
-            value={values.email ? values.email : ""}
             placeholder="Введите ваш email"
+            className={`login__input ${errors?.email?.message ? "login__input_error" : ""}`}
+            {...register('email')}
           />
-          <span className="register__error">{errors.email}</span>
+          <span className="login__error">{errors?.email?.message}</span>
 
-          <label htmlFor="" className="register__label">Пароль</label>
+          <label htmlFor="" className="login__label">Пароль</label>
           <input
-            required
             type="password"
-            className={`register__input ${inputsValid.password ? "" : "register__input_error"}`}
-            name="password"
-            onChange={handleChange}
-            value={values.password ? values.password : ""}
+            className={`login__input ${errors?.password?.message ? "login__input_error" : ""}`}
+            {...register('password')}
             placeholder="Введите ваш пароль"
             autoComplete="on"
           />
-          <span className="register__error">{errors.password}</span>
+          <span className="login__error">{errors?.password?.message}</span>
         </fieldset>
         <button
           className={`login__submit ${isValid ? "" : "login__submit_disable"} `}

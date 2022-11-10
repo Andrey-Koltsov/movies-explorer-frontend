@@ -29,9 +29,9 @@ export default function SavedMovies({ savedMovies, isMoviesLoaded, onChangeMovie
     }
   }, [filter, setIsShort, savedMovies]);
 
-  function handleSearch(searchValue) {
-    filter(searchValue, savedMovies);
-    localStorage.setItem('mySearchString', JSON.stringify(searchValue));
+  function handleSearch({searchString}) {
+    filter(searchString, savedMovies);
+    localStorage.setItem('mySearchString', JSON.stringify(searchString));
   }
 
   function handleChangeCheckbox() {

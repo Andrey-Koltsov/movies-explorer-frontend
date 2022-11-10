@@ -93,6 +93,7 @@
 .login__submit_disable {
   background-color: #F8F8F8;
   color: #000;
+  cursor: default;
 }
 
 .login__submit_disable:hover {

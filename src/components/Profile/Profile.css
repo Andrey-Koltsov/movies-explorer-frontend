@@ -58,6 +58,14 @@
   color: #FFFFFF;
 }
 
+.profile__error {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 17px;
+  color: #EE3465;
+}
+
 .profile__input:focus {
   outline: none;
   border-radius: 4px;
@@ -91,6 +99,7 @@
 }
 
 .profile__btn_disable {
+  cursor: default;
   opacity: .4;
 }
 

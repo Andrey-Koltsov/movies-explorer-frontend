@@ -18,7 +18,6 @@ import {
   MESSAGE_ERROR_LOGIN,
   MESSAGE_ERROR_REGISTER,
   MESSAGE_ERROR_SERVER,
-  MESSAGE_ERROR_UPDATE,
   MESSAGE_UPDATE
 } from '../../utils/constants';
 import RedirectRoute from '../RedirectRoute/RedirectRoute';
@@ -123,19 +122,15 @@ function App() {
   }
 
   function handleUpdateUser(data) {
-    if ((currentUser.name !== data.name) || (currentUser.email !== data.email)) {
-      mainApi.updateUserInfo(data)
-        .then(res => {
-          setCurrentUser(res);
-          setPopup({ status: true, text: MESSAGE_UPDATE });
-        })
-        .catch(err => {
-          console.log(err);
-          setPopup({ status: true, text: MESSAGE_ERROR_SERVER });
-        });
-    } else {
-      setPopup({ status: true, text: MESSAGE_ERROR_UPDATE });
-    }
+    mainApi.updateUserInfo(data)
+      .then(res => {
+        setCurrentUser(res);
+        setPopup({ status: true, text: MESSAGE_UPDATE });
+      })
+      .catch(err => {
+        console.log(err);
+        setPopup({ status: true, text: MESSAGE_ERROR_SERVER });
+      });
   }
 
   function popupClose() {

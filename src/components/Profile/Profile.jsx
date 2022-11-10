@@ -1,33 +1,31 @@
 import { useContext } from "react";
 import CurrentUserContext from "../../context/CurrentUserContext";
-import { useFormValidation } from "../../hooks/useFormValidation";
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 import "./Profile.css";
 
 import Header from "../Header/Header";
-import { useEffect } from "react";
+import { VALIDATE_MESSAGE_DUBLICATE, VALIDATE_MESSAGE_EMAIL, VALIDATE_MESSAGE_REQUIRED } from "../../utils/constants";
 
 export default function Profile({ onSignout, onUpdate }) {
   const currentUser = useContext(CurrentUserContext);
-  const {
-    values,
-    handleChange,
-    isValid,
-    errors,
-    setIsValid
-  } = useFormValidation({ name: currentUser.name, email: currentUser.email });
 
-  console.log('ISVALID', isValid);
-  useEffect(() => {
-    setIsValid(((currentUser.name !== values.name) || (currentUser.email !== values.email)) && isValid)
-  }, [setIsValid, currentUser, values, isValid]);
+  const schema = yup.object({
+    name: yup.string().required(VALIDATE_MESSAGE_REQUIRED).min(2).max(30).test({
+      message: VALIDATE_MESSAGE_DUBLICATE,
+      test: (value) => value !== currentUser.name,
+    }).default(currentUser.name),
+    email: yup.string(currentUser.email).required(VALIDATE_MESSAGE_REQUIRED).email(VALIDATE_MESSAGE_EMAIL),
+  }).required();
+
+  const { register, handleSubmit, formState: { errors, isValid } } = useForm({
+    mode: 'onChange',
+    resolver: yupResolver(schema)
+  });
 
   function handleBtnSignout() {
     onSignout();
-  }
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    onUpdate({ name: values.name, email: values.email });
   }
 
   return (
@@ -35,38 +33,30 @@ export default function Profile({ onSignout, onUpdate }) {
       <Header />
       <main className="profile">
         <h1 className="profile__title">Привет, {currentUser.name}!</h1>
-        <form className="profile__form" onSubmit={handleSubmit}>
+        <form className="profile__form" onSubmit={handleSubmit(onUpdate)}>
           <div className="profile__form-block">
             <fieldset className="profile__fieldset">
               <label htmlFor="profile-name" className="profile__label">Имя</label>
               <input
-                required
                 type="text"
                 className="profile__input"
-                id="profile-name"
                 placeholder="Введите ваше имя"
-                name="name"
-                value={values.name ? values.name : ''}
-                onChange={handleChange}
-                minLength="2"
-                maxLength="30"
+                defaultValue={currentUser.name}
+                {...register('name')}
               />
             </fieldset>
-            {errors.name && <span className="profile__error">{errors.name}</span>}
+            {errors?.name?.message && <span className="profile__error">{errors?.name?.message}</span>}
             <fieldset className="profile__fieldset">
               <label htmlFor="profile-email" className="profile__label">E-mail</label>
               <input
-                required
                 type="email"
+                placeholder="Введите ваш email"
                 className="profile__input"
-                id="profile-email"
-                placeholder="Введите ваш e-mail"
-                name="email"
-                value={values.email ? values.email : ''}
-                onChange={handleChange}
+                defaultValue={currentUser.email}
+                {...register('email', {})}
               />
             </fieldset>
-            {errors.email && <span className="profile__error">{errors.email}</span>}
+            {errors?.email?.message && <span className="profile__error">{errors?.email?.message}</span>}
           </div>
           <div className="profile__submit">
             <button
@@ -78,7 +68,6 @@ export default function Profile({ onSignout, onUpdate }) {
         </form>
         <button type="button" className="profile__btn profile__btn_type_exit" onClick={handleBtnSignout}>Выйти из аккаунта</button>
       </main>
-
     </>
   );
 };

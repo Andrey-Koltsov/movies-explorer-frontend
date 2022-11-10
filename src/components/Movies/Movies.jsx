@@ -33,15 +33,15 @@ export default function Movies({ savedMovies, onChangeMovie }) {
     }
   }, [filter, setIsShort]);
 
-  function handleSearch(searchValue) {
-    console.log(searchValue);
+  function handleSearch({searchString}) {
+    console.log(searchString);
     if (!movies.length) {
       setIsErrorLoading(false);
       setIsLoading(true);
       moviesApi.getMovies()
         .then(data => {
           setMovies(data);
-          filter(searchValue, data);
+          filter(searchString, data);
           localStorage.setItem('movies', JSON.stringify(data));
         })
         .catch(err => {
@@ -50,9 +50,9 @@ export default function Movies({ savedMovies, onChangeMovie }) {
         })
         .finally(() => setIsLoading(false));
     } else {
-      filter(searchValue, movies);
+      filter(searchString, movies);
     }
-    localStorage.setItem('searchString', JSON.stringify(searchValue));
+    localStorage.setItem('searchString', JSON.stringify(searchString));
   }
 
   function handleChangeCheckbox() {
