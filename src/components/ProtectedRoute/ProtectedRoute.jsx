@@ -6,7 +6,7 @@ function ProtectedRoute({ component: Component, ...props }) {
   const currentUser = useContext(CurrentUserContext);
   return (
     <Route>
-      {currentUser['_id'] ? <Component {...props} /> : <Redirect to="/" />}
+      { '_id' in currentUser ? <Component {...props} /> : <Redirect to="/" />}
     </Route>
   )
 }

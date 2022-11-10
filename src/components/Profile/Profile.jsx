@@ -4,6 +4,7 @@ import { useFormValidation } from "../../hooks/useFormValidation";
 import "./Profile.css";
 
 import Header from "../Header/Header";
+import { useEffect } from "react";
 
 export default function Profile({ onSignout, onUpdate }) {
   const currentUser = useContext(CurrentUserContext);
@@ -12,7 +13,13 @@ export default function Profile({ onSignout, onUpdate }) {
     handleChange,
     isValid,
     errors,
+    setIsValid
   } = useFormValidation({ name: currentUser.name, email: currentUser.email });
+
+  console.log('ISVALID', isValid);
+  useEffect(() => {
+    setIsValid(((currentUser.name !== values.name) || (currentUser.email !== values.email)) && isValid)
+  }, [setIsValid, currentUser, values, isValid]);
 
   function handleBtnSignout() {
     onSignout();

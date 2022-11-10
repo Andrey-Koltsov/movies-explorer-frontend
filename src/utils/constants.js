@@ -1,6 +1,7 @@
 const BEATFILM_URL = 'https://api.nomoreparties.co';
 const BEATFILM_MOVIES_URL = 'https://api.nomoreparties.co/beatfilm-movies';
-const API_URL = 'https://api.koltsov.nomoredomains.icu'
+// const API_URL = 'https://api.koltsov.nomoredomains.icu'
+const API_URL = 'http://localhost:3001'
 
 const MESSAGE_ERROR_REGISTER = 'Пользователь с таким E-mail уже существует';
 const MESSAGE_ERROR_LOGIN = 'Неправильный логин или пароль';

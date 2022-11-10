@@ -1,4 +1,5 @@
-import { useCallback, useState } from "react";
+import isEmail from 'validator/es/lib/isEmail';
+import { useCallback, useEffect, useState } from "react";
 
 export function useFormValidation(initValues = {}) {
   const [values, setValues] = useState(initValues);
@@ -6,13 +7,12 @@ export function useFormValidation(initValues = {}) {
   const [inputsValid, setInputsValid] = useState({});
   const [isValid, setIsValid] = useState(false);
 
-  const checkValidityFormSubmit = (evt) => {
-    setIsValid(evt.target.closest("form").checkValidity());
-    return evt.target.closest("form").checkValidity();
-  }
+  useEffect(() => {
+    console.log(Object.values(inputsValid).every(item => item === true));
+    setIsValid(Object.values(inputsValid).every(item => item === true));
+  }, [inputsValid]);
 
   const handleChange = (evt) => {
-    const target = evt.target;
     const {
       name,
       type,
@@ -20,16 +20,24 @@ export function useFormValidation(initValues = {}) {
       checked,
       validity,
       validationMessage
-    } = target;
+    } = evt.target;
 
     if (type === "checkbox") {
       setValues({ ...values, [name]: checked });
+      setInputsValid({ ...inputsValid, [name]: validity.valid });
+    } else if (type === "email") {
+      setValues({ ...values, [name]: value });
+      setInputsValid({ ...inputsValid, [name]: isEmail(value) });
+      if (isEmail(value)) {
+        setErrors({ ...errors, [name]: '' });
+      } else {
+        setErrors({ ...errors, [name]: 'Неправильно введена почта' });
+      }
     } else {
       setValues({ ...values, [name]: value });
+      setInputsValid({ ...inputsValid, [name]: validity.valid })
+      setErrors({ ...errors, [name]: validationMessage });
     }
-    setErrors({ ...errors, [name]: validationMessage });
-    setInputsValid({ ...inputsValid, [name]: validity.valid })
-    setIsValid(target.closest("form").checkValidity());
   };
 
   const resetForm = useCallback((newValues = {}, newErrors = {}, newIsValid = false) => {
@@ -46,6 +54,5 @@ export function useFormValidation(initValues = {}) {
     isValid,
     setIsValid,
     resetForm,
-    checkValidityFormSubmit
   };
 }

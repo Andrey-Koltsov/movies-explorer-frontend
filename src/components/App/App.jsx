@@ -34,12 +34,15 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    setReady(false);
+    setPopup(prevStat => ({ ...prevStat, status: false }));
+  }, [location]);
+
+  useEffect(() => {
     mainApi.getUserInfo()
       .then(user => {
         if (user) {
-          setCurrentUser(user);
           setLoggedIn(true);
+          setCurrentUser(user);
         }
       })
       .catch(console.log)
@@ -54,17 +57,24 @@ function App() {
     }
   }, [loggedIn]);
 
-  useEffect(() => {
-    setPopup(prevStat => ({ ...prevStat, status: false }));
-  }, [location]);
+  function setAuthState(data) {
+    console.log(data);
+    setReady(false);
+    setLoggedIn(true);
+    history.push('/movies');
+  }
+
+  function clearAuthState(data) {
+    console.log(data);
+    setLoggedIn(false);
+    setCurrentUser({})
+    localStorage.clear();
+    history.push('/');
+  }
 
   function handleLogin({ email, password }) {
     mainApi.auth({ email, password })
-      .then(data => {
-        console.log(data);
-        setLoggedIn(true);
-        history.push('/movies');
-      })
+      .then(setAuthState)
       .catch((err) => {
         if (err.response.status === 401) {
           setPopup({ status: true, text: MESSAGE_ERROR_LOGIN });
@@ -77,12 +87,7 @@ function App() {
 
   function handleRegister({ name, email, password }) {
     mainApi.register({ name, email, password })
-      .then(data => {
-        console.log(data);
-        setCurrentUser(data);
-        setLoggedIn(true);
-        history.push('/movies');
-      })
+      .then(setAuthState)
       .catch(err => {
         if (err.response.status === 409) {
           setPopup({ status: true, text: MESSAGE_ERROR_REGISTER });
@@ -95,13 +100,7 @@ function App() {
 
   function handleSignout() {
     mainApi.signout()
-      .then(data => {
-        console.log(data);
-        setLoggedIn(false);
-        setCurrentUser({})
-        history.push('/');
-        localStorage.clear();
-      })
+      .then(clearAuthState)
       .catch(err => {
         console.log(err)
       });
@@ -111,7 +110,7 @@ function App() {
     if (action === 'save') {
       mainApi.saveMovie(movie)
         .then(data => setSavedMovies(prevStat => [...prevStat, data]))
-        .catch(console.log);
+        .catch(clearAuthState);
     }
     if (action === 'remove') {
       const id = movie['_id'] ? movie['_id'] : savedMovies.find(item => item.movieId === movie.id)['_id'];
@@ -119,7 +118,7 @@ function App() {
         .then(res => {
           setSavedMovies(prevStat => prevStat.filter(item => item['_id'] !== res['_id']));
         })
-        .catch(console.log);
+        .catch(clearAuthState);
     }
   }
 

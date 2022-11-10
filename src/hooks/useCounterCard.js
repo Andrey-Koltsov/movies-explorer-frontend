@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
+import { COUNTER_CARD } from "../utils/counterCardSettings";
 
 export default function useCounterCard(defaultCount) {
   const [count, setCount] = useState(defaultCount);
@@ -9,21 +10,21 @@ export default function useCounterCard(defaultCount) {
   }
 
   const handleResize = useCallback(() => {
-    if (window.innerWidth >= 1280) {
-      setCount(12);
-      setStepSize(4);
+    if (window.innerWidth >= COUNTER_CARD['4'].minWidth) {
+      setCount(COUNTER_CARD['4'].defaultCount);
+      setStepSize(COUNTER_CARD['4'].step);
     }
-    if (window.innerWidth >= 768 && window.innerWidth < 1280) {
-      setCount(8);
-      setStepSize(2);
+    if (window.innerWidth >= COUNTER_CARD['3'].minWidth && window.innerWidth < COUNTER_CARD['3'].maxWidth) {
+      setCount(COUNTER_CARD['3'].defaultCount);
+      setStepSize(COUNTER_CARD['3'].step);
     }
-    if (window.innerWidth >= 480 && window.innerWidth < 768) {
-      setCount(8);
-      setStepSize(2);
+    if (window.innerWidth >= COUNTER_CARD['2'].minWidth && window.innerWidth < COUNTER_CARD['2'].maxWidth) {
+      setCount(COUNTER_CARD['2'].defaultCount);
+      setStepSize(COUNTER_CARD['2'].step);
     }
-    if (window.innerWidth >= 320 && window.innerWidth < 480) {
-      setCount(5);
-      setStepSize(2);
+    if (window.innerWidth >= COUNTER_CARD['1'].minWidth && window.innerWidth < COUNTER_CARD['1'].maxWidth) {
+      setCount(COUNTER_CARD['1'].defaultCount);
+      setStepSize(COUNTER_CARD['1'].step);
     }
   }, []);
 

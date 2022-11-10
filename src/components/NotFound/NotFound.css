@@ -45,9 +45,23 @@
   color: #4285F4;
 }
 
-.not-found__link:hover {
+.not-found__btn-back {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  border: none;
+  background-color: transparent;
+  color: #4285F4;
+  cursor: pointer;
+}
+
+.not-found__btn-back:hover {
   opacity: .7;
 }
+
+
 
 @media screen and (max-width: 550px) {
   .not-found {
