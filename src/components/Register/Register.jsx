@@ -1,65 +1,62 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 import Logotype from "../Logotype/Logotype";
 import "./Register.css";
+import { VALIDATE_MESSAGE_EMAIL, VALIDATE_MESSAGE_REQUIRED } from "../../utils/constants";
 
-export default function Register() {
-  const [inputsValue, setInputsValue] = useState({ name: '', email: '', password: '' });
-  const [inputsValidity, setInputsValidity] = useState({ name: false, email: false, password: false });
-  const [inputsErrorMessage, setInputsErrorMessage] = useState({ name: '', email: '', password: '' });
+export default function Register({ onRegister }) {
+  const schema = yup.object({
+    name: yup.string().required(VALIDATE_MESSAGE_REQUIRED),
+    email: yup.string().required(VALIDATE_MESSAGE_REQUIRED).email(VALIDATE_MESSAGE_EMAIL),
+    password: yup.string().required(VALIDATE_MESSAGE_REQUIRED),
+  }).required();
 
-  function handleChange({ target: { name, value, validity, validationMessage } }) {
-    setInputsValue(prevStat => ({ ...prevStat, [name]: value }));
-    setInputsValidity(prevStat => ({ ...prevStat, [name]: validity.valid }));
-    setInputsErrorMessage(prevStat => ({ ...prevStat, [name]: validationMessage }));
-  }
+  const { register, handleSubmit, formState: { errors, isValid } } = useForm({
+    mode: 'onChange',
+    resolver: yupResolver(schema)
+  });
 
   return (
     <div className="register">
       <Logotype />
       <h1 className="register__title">Добро пожаловать!</h1>
-      <form className="register__form">
+      <form className="register__form" onSubmit={handleSubmit(onRegister)} noValidate>
         <fieldset className="register__fieldset">
-
           <label htmlFor="" className="register__label">Имя</label>
           <input
-            required
             type="text"
-            className={`register__input ${inputsValidity.name ? "" : "register__input_error"}`}
-            name="name"
-            onChange={handleChange}
-            value={inputsValue.name}
-            placeholder='Введите ваше имя'
+            className={`register__input ${errors?.name?.message ? "register__input_error" : ""}`}
+            placeholder="Введите ваше имя"
+            {...register('name')}
           />
-          <span className="register__error">{inputsErrorMessage.name}</span>
+          <span className="register__error">{errors?.name?.message}</span>
 
           <label htmlFor="" className="register__label">E-mail</label>
           <input
-            required
             type="email"
-            className={`register__input ${inputsValidity.email ? "" : "register__input_error"}`}
-            name="email"
-            onChange={handleChange}
-            value={inputsValue.email}
-            placeholder='Введите ваш email'
+            placeholder="Введите ваш email"
+            className={`register__input ${errors?.email?.message ? "register__input_error" : ""}`}
+            {...register('email')}
           />
-          <span className="register__error">{inputsErrorMessage.email}</span>
+          <span className="register__error">{errors?.email?.message}</span>
 
           <label htmlFor="" className="register__label">Пароль</label>
           <input
-            required
             type="password"
-            className={`register__input ${inputsValidity.password ? "" : "register__input_error"}`}
-            name="password"
-            onChange={handleChange}
-            value={inputsValue.password}
-            placeholder='Введите ваш пароль'
+            className={`register__input ${errors?.password?.message ? "register__input_error" : ""}`}
+            {...register('password')}
+            placeholder="Введите ваш пароль"
+            autoComplete="on"
           />
-          <span className="register__error">{inputsErrorMessage.password}</span>
-
-
+          <span className="register__error">{errors?.password?.message}</span>
         </fieldset>
-        <button className="register__submit" type>Зарегистрироваться</button>
+        <button
+          className={`register__submit ${isValid ? "" : "register__submit_disable"} `}
+          type="submit"
+          disabled={!isValid}
+        >Зарегистрироваться</button>
       </form>
       <div className="register__inner">
         <span className="register__text">Уже зарегистрированы?</span>

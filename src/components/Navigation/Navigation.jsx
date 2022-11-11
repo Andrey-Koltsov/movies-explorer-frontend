@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import CurrentUserContext from "../../context/CurrentUserContext";
 import "./Navigation.css";
 
-export default function Navigation({ isAuth }) {
+export default function Navigation() {
   const [activeMenu, setActiveMenu] = useState(false);
+
+  const currentUser = useContext(CurrentUserContext);
 
   function handleClickMenu() {
     setActiveMenu(!activeMenu);
@@ -11,7 +14,7 @@ export default function Navigation({ isAuth }) {
 
   return (
     <nav className="navigation">
-      {isAuth ?
+      {currentUser['_id'] ?
         <>
           <div className={`navigation__main ${activeMenu ? 'navigation__main_show' : ''} `}>
             <div className="navigation__block navigation__block_type_menu">

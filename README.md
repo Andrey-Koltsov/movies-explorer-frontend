@@ -2,7 +2,9 @@
 
 **Frontend Сервиса, в котором можно найти фильмы по запросу и сохранить в личном кабинете.**
 
-> Макет приложения: https://disk.yandex.ru/d/K-AfsMnaUx-WQQ
+> Макет приложения: https://disk.yandex.ru/d/K-AfsMnaUx-WQQ  
+> Домен: https://koltsov.nomoredomains.icu  
+> Пул реквест на github: https://github.com/Andrey-Koltsov/movies-explorer-frontend/pull/2  
 
 ## Запуск проекта  
 

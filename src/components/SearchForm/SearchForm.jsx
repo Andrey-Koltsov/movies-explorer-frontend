@@ -1,30 +1,40 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import "./SearchForm.css";
 
-export default function SearchForm() {
-  const [searchValue, setSearchValue] = useState('');
+export default function SearchForm({ searchString, checkbox, onSubmit, onChangeCheckbox }) {
+  const schema = yup.object({
+    searchString: yup.string().required(),
+  }).required();
 
-  function handleChangeInput(evt) {
-    setSearchValue(evt.target.value);
-  }
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
+  });
 
   return (
     <div className="search-form">
-      <form className="search-form__form">
+      <form className="search-form__form" onSubmit={handleSubmit(onSubmit)} noValidate>
         <span className="search-form__icon"></span>
-        <input
-          required
-          type="text"
-          className="search-form__input"
-          placeholder="Фильм"
-          onChange={handleChangeInput}
-          value={searchValue}
-        />
+        <fieldset className="search-form__fildset">
+          <input
+            type="text"
+            className="search-form__input"
+            placeholder="Фильм"
+            defaultValue={searchString}
+            {...register('searchString')}
+          />
+          {errors?.searchString?.message && <span className="serach-form__error">Нужно ввести ключевое слово</span>}
+        </fieldset>
         <button className="search-form__btn" type="submit"></button>
       </form>
       <div className="search-form__filter">
-        <FilterCheckbox label="Короткометражки" />
+        <FilterCheckbox
+          label="Короткометражки"
+          checked={checkbox}
+          onChange={onChangeCheckbox}
+        />
       </div>
     </div>
   );

@@ -8,6 +8,10 @@
   color: #FFFFFF;
 }
 
+.filter-checkbox__input {
+  display: none;
+}
+
 .filter-checkbox__switch {
   width: 36px;
   height: 20px;
